@@ -12,504 +12,414 @@
         }
 
         :root {
-            --color-primary: #f5f1ed;
-            --color-secondary: #f9f7f4;
-            --color-accent: #d4af37;
-            --color-text: #3a3a3a;
-            --color-light-text: #6b6b6b;
-            --color-white: #ffffff;
-            --font-serif: 'Georgia', 'Garamond', serif;
-            --font-sans: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        html {
-            scroll-behavior: smooth;
+            --primary: #f5ede1;
+            --accent: #d4af37;
+            --text: #2c2c2c;
+            --light-text: #7a7a7a;
+            --white: #ffffff;
         }
 
         body {
-            font-family: var(--font-sans);
-            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
-            color: var(--color-text);
-            overflow-x: hidden;
-        }
-
-        /* Pantalla del Sobre */
-        .envelope-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #faf8f3 0%, #f5ede1 100%);
+            min-height: 100vh;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            z-index: 1000;
-            opacity: 1;
-            transition: all 0.8s ease-out;
+            overflow: hidden;
         }
 
-        .envelope-screen.hidden {
-            opacity: 0;
-            pointer-events: none;
-            transform: translateY(-100%);
-        }
-
-        .envelope-wrapper {
-            position: relative;
-            width: 100%;
-            max-width: 480px;
-            margin: 0 auto;
-        }
-
-        /* Cinta decorativa */
-        .ribbon {
-            position: absolute;
-            top: -30px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 40px;
-            z-index: 10;
-            animation: ribbonUnwind 1.5s ease-out forwards;
-            animation-delay: 0.5s;
-        }
-
-        .ribbon.hidden {
+        /* Música de fondo */
+        audio {
             display: none;
         }
 
-        .ribbon::before {
-            content: '';
-            position: absolute;
+        /* Contenedor principal */
+        .envelope-wrapper {
             width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, #c41e3a 0%, #ff6b9d 50%, #c41e3a 100%);
-            border-radius: 50% 50% 0 0;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
         }
 
-        .ribbon::after {
-            content: '';
-            position: absolute;
-            width: 120%;
-            height: 15px;
-            background: linear-gradient(90deg, #c41e3a 0%, #ff6b9d 50%, #c41e3a 100%);
-            top: 20px;
-            left: -10%;
-            border-radius: 50%;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        @keyframes ribbonUnwind {
-            0% {
-                transform: translateX(-50%) translateY(0) rotateZ(0deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translateX(-50%) translateY(-80px) rotateZ(360deg);
-                opacity: 0;
-            }
-        }
-
-        /* Sobre principal */
+        /* Sobre */
         .envelope {
             position: relative;
             width: 100%;
-            background: var(--color-white);
-            border: 3px solid var(--color-accent);
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 20px 80px rgba(0, 0, 0, 0.15);
-            animation: envelopeRiseUp 1.2s ease-out 0.6s forwards;
+            max-width: 500px;
+            height: 600px;
+            background: var(--white);
+            border: 3px solid var(--accent);
+            border-radius: 12px;
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.2);
+            animation: envelopeEnter 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+        }
+
+        @keyframes envelopeEnter {
+            from {
+                opacity: 0;
+                transform: scale(0.5) translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        /* Moño */
+        .bow {
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 50px;
+            z-index: 10;
+            animation: bowUnwind 1.2s ease-out 0.8s forwards;
             animation-fill-mode: both;
         }
 
-        @keyframes envelopeRiseUp {
+        .bow-center {
+            position: absolute;
+            width: 30px;
+            height: 40px;
+            background: linear-gradient(90deg, #c41e3a 0%, #e74c7c 50%, #c41e3a 100%);
+            border-radius: 50% 50% 40% 40%;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 4px 12px rgba(196, 30, 58, 0.3);
+        }
+
+        .bow-left,
+        .bow-right {
+            position: absolute;
+            width: 50px;
+            height: 45px;
+            background: linear-gradient(135deg, #c41e3a 0%, #e74c7c 100%);
+            border-radius: 50% 10% 50% 10%;
+            top: 15px;
+            box-shadow: 0 4px 12px rgba(196, 30, 58, 0.2);
+        }
+
+        .bow-left {
+            left: -25px;
+            transform: rotateZ(-30deg);
+        }
+
+        .bow-right {
+            right: -25px;
+            transform: rotateZ(30deg);
+        }
+
+        @keyframes bowUnwind {
             0% {
-                transform: translateY(0) scale(1);
+                opacity: 1;
+                transform: translateX(-50%) rotateZ(0deg) translateY(0);
+            }
+            70% {
                 opacity: 1;
             }
             100% {
-                transform: translateY(-150vh) scale(0.8);
                 opacity: 0;
+                transform: translateX(-50%) rotateZ(360deg) translateY(-100px);
             }
         }
 
-        /* Decoración superior del sobre */
-        .envelope-decoration-top {
+        /* Flap del sobre (tapa) */
+        .flap {
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
-            height: 15px;
-            background: linear-gradient(90deg, var(--color-accent) 0%, transparent 50%, var(--color-accent) 100%);
-            opacity: 0.6;
-            z-index: 1;
+            height: 50%;
+            background: var(--white);
+            border: 3px solid var(--accent);
+            border-bottom: none;
+            border-radius: 12px 12px 0 0;
+            transform-origin: top center;
+            z-index: 5;
+            animation: flapOpen 1.5s ease-out 1.2s forwards;
+            animation-fill-mode: both;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
         }
 
-        .envelope-decoration-top::after {
-            content: '✦ ✦ ✦ ✦ ✦';
-            position: absolute;
-            top: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: var(--color-accent);
-            font-size: 0.8rem;
-            letter-spacing: 8px;
-            white-space: nowrap;
+        @keyframes flapOpen {
+            0% {
+                transform: rotateX(0deg);
+            }
+            100% {
+                transform: rotateX(-180deg);
+            }
         }
 
         /* Contenido del sobre */
         .envelope-content {
-            padding: 3rem 2rem;
-            text-align: center;
-            position: relative;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 40px 30px;
+            overflow-y: auto;
+            opacity: 0;
+            animation: contentAppear 0.8s ease-out 2s forwards;
             z-index: 2;
+            background: var(--white);
+            border-radius: 12px;
         }
 
-        .couple-image {
-            width: 100%;
-            max-width: 300px;
-            height: 300px;
-            object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        @keyframes contentAppear {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
 
-        .envelope-title {
-            font-family: var(--font-serif);
-            font-size: 2.8rem;
-            font-style: italic;
-            color: var(--color-accent);
-            font-weight: 400;
-            margin-bottom: 0.5rem;
-            letter-spacing: 2px;
+        .envelope-content::-webkit-scrollbar {
+            width: 6px;
         }
 
-        .envelope-subtitle {
-            color: var(--color-light-text);
-            font-size: 1.1rem;
-            font-style: italic;
+        .envelope-content::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .envelope-content::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 3px;
+        }
+
+        /* Estilos de contenido */
+        .header {
+            text-align: center;
             margin-bottom: 2rem;
-            font-weight: 300;
-        }
-
-        .touch-instruction {
-            color: var(--color-accent);
-            font-size: 0.95rem;
-            font-weight: 600;
-            letter-spacing: 1px;
-            animation: pulse-instruction 2s infinite;
-            cursor: pointer;
-        }
-
-        @keyframes pulse-instruction {
-            0%, 100% { opacity: 0.6; }
-            50% { opacity: 1; }
-        }
-
-        .floral-divider {
-            color: var(--color-accent);
-            font-size: 1.2rem;
-            margin: 1rem 0;
-            opacity: 0.6;
-        }
-
-        /* Contenido principal */
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 2rem 20px;
-            min-height: 100vh;
-        }
-
-        /* Hero/Portada */
-        .hero {
-            text-align: center;
-            padding: 4rem 0;
             opacity: 0;
-            animation: fadeIn 0.8s ease-out 1.8s forwards;
+            animation: slideUp 0.6s ease-out 2.2s forwards;
         }
 
-        .hero h1 {
-            font-family: var(--font-serif);
-            font-size: 4rem;
-            font-style: italic;
-            color: var(--color-text);
-            margin-bottom: 0.5rem;
-            font-weight: 400;
-            letter-spacing: 2px;
-        }
-
-        .hero .ampersand {
-            font-size: 3.5rem;
-            color: var(--color-accent);
-            margin: 0 0.5rem;
-        }
-
-        .hero p {
-            font-family: var(--font-serif);
-            font-size: 1.4rem;
-            color: var(--color-light-text);
-            font-style: italic;
-            margin-top: 1.5rem;
-            font-weight: 400;
-        }
-
-        /* Bienvenida personalizada */
-        .welcome-section {
-            background: var(--color-white);
-            padding: 2.5rem;
-            border-radius: 15px;
-            margin-bottom: 3rem;
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
-            text-align: center;
-            opacity: 0;
-            animation: slideUp 0.6s ease-out 2s forwards;
-        }
-
-        .welcome-section h2 {
-            font-family: var(--font-serif);
+        .names {
             font-size: 2rem;
-            color: var(--color-text);
-            margin-bottom: 1rem;
-            font-weight: 400;
+            font-weight: 300;
+            color: var(--text);
+            font-style: italic;
+            margin-bottom: 0.5rem;
+            letter-spacing: 1px;
         }
 
-        .guest-name {
-            color: var(--color-accent);
-            font-weight: 600;
-        }
-
-        .passes-info {
-            margin-top: 1.5rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid #e8e8e8;
-            font-size: 1.1rem;
-            color: var(--color-light-text);
-        }
-
-        .passes-number {
+        .names .ampersand {
+            color: var(--accent);
             font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--color-accent);
-            margin: 0.5rem 0;
+            margin: 0 0.3rem;
         }
 
-        /* Detalles del evento */
-        .event-details {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin-bottom: 3rem;
+        .tagline {
+            font-size: 0.95rem;
+            color: var(--light-text);
+            font-style: italic;
+            letter-spacing: 0.5px;
         }
 
-        .detail-card {
-            background: var(--color-white);
-            padding: 2rem;
-            border-radius: 15px;
-            text-align: center;
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+        .divider {
+            width: 40px;
+            height: 2px;
+            background: var(--accent);
+            margin: 1.5rem auto;
+            opacity: 0;
+            animation: slideUp 0.6s ease-out 2.4s forwards;
+        }
+
+        /* Secciones */
+        .section {
+            margin-bottom: 2rem;
             opacity: 0;
             animation: slideUp 0.6s ease-out forwards;
         }
 
-        .detail-card:nth-child(1) { animation-delay: 2.2s; }
-        .detail-card:nth-child(2) { animation-delay: 2.4s; }
+        .section:nth-of-type(1) { animation-delay: 2.6s; }
+        .section:nth-of-type(2) { animation-delay: 2.8s; }
+        .section:nth-of-type(3) { animation-delay: 3s; }
+        .section:nth-of-type(4) { animation-delay: 3.2s; }
+        .section:nth-of-type(5) { animation-delay: 3.4s; }
+        .section:nth-of-type(6) { animation-delay: 3.6s; }
 
-        .detail-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            color: var(--color-accent);
-        }
-
-        .detail-card h3 {
-            font-family: var(--font-serif);
-            font-size: 1.5rem;
-            color: var(--color-text);
-            margin-bottom: 0.5rem;
-            font-weight: 400;
-        }
-
-        .detail-card p {
+        .section-title {
             font-size: 1.1rem;
-            color: var(--color-light-text);
-            margin-bottom: 0.5rem;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        .countdown {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--color-accent);
+        .section-content {
+            font-size: 0.95rem;
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .countdown-box {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
             margin-top: 1rem;
         }
 
-        /* Código de vestimenta */
-        .dress-code {
-            background: var(--color-white);
-            padding: 3rem;
-            border-radius: 15px;
-            margin-bottom: 3rem;
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
-            opacity: 0;
-            animation: slideUp 0.6s ease-out 2.6s forwards;
-        }
-
-        .dress-code h3 {
-            font-family: var(--font-serif);
-            font-size: 2rem;
-            color: var(--color-text);
+        .countdown-item {
+            background: var(--primary);
+            padding: 1rem;
+            border-radius: 8px;
             text-align: center;
-            margin-bottom: 2rem;
-            font-weight: 400;
+            border: 2px solid var(--accent);
         }
 
-        .dress-examples {
+        .countdown-number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .countdown-label {
+            font-size: 0.75rem;
+            color: var(--light-text);
+            text-transform: uppercase;
+            margin-top: 0.3rem;
+            letter-spacing: 0.5px;
+        }
+
+        .time-display {
+            background: var(--primary);
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            border: 2px solid var(--accent);
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        .location {
+            background: var(--primary);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 0.5rem;
+        }
+
+        .location-text {
+            font-size: 0.9rem;
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .bible-verse {
+            background: linear-gradient(135deg, #fef7e0 0%, #fdf3d5 100%);
+            padding: 1.5rem;
+            border-left: 4px solid var(--accent);
+            border-radius: 4px;
+            font-style: italic;
+            color: var(--text);
+            font-size: 0.9rem;
+            line-height: 1.8;
+            margin: 1rem 0;
+        }
+
+        .bible-reference {
+            font-size: 0.8rem;
+            color: var(--light-text);
+            margin-top: 0.5rem;
+            text-align: right;
+        }
+
+        .dress-code-items {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.8rem;
+            margin-top: 0.8rem;
         }
 
         .dress-item {
+            background: var(--primary);
+            padding: 0.8rem;
+            border-radius: 6px;
             text-align: center;
-            padding: 1.5rem;
-            background: var(--color-primary);
-            border-radius: 10px;
-            transition: all 0.3s ease;
+            font-size: 0.85rem;
+            border: 1px solid var(--accent);
         }
 
-        .dress-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.2);
+        .dress-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.3rem;
         }
 
-        .dress-item-icon {
-            font-size: 3rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .dress-item-text {
-            font-size: 0.95rem;
-            color: var(--color-text);
-            font-weight: 500;
-        }
-
-        .color-palette {
+        .rsvp-section {
             text-align: center;
             margin-top: 2rem;
-        }
-
-        .color-palette p {
-            color: var(--color-light-text);
-            margin-bottom: 1rem;
-            font-size: 1.05rem;
-        }
-
-        .colors {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .color-swatch {
-            width: 80px;
-            height: 80px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-        }
-
-        .color-swatch:hover {
-            transform: scale(1.1);
-        }
-
-        /* RSVP */
-        .rsvp-section {
-            background: var(--color-white);
-            padding: 3rem;
-            border-radius: 15px;
-            text-align: center;
-            margin-bottom: 3rem;
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
-            opacity: 0;
-            animation: slideUp 0.6s ease-out 2.8s forwards;
-        }
-
-        .rsvp-section h3 {
-            font-family: var(--font-serif);
-            font-size: 2rem;
-            color: var(--color-text);
-            margin-bottom: 1rem;
-            font-weight: 400;
-        }
-
-        .rsvp-section p {
-            color: var(--color-light-text);
-            margin-bottom: 2rem;
-            font-size: 1.05rem;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #fef7e0 0%, #fdf3d5 100%);
+            border-radius: 8px;
+            border: 2px solid var(--accent);
         }
 
         .rsvp-btn {
-            background: var(--color-accent);
-            color: var(--color-text);
-            border: none;
-            padding: 1.2rem 2.5rem;
-            font-size: 1.1rem;
-            font-family: var(--font-sans);
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
-            font-weight: 600;
-            letter-spacing: 1px;
-            text-decoration: none;
             display: inline-block;
+            background: var(--accent);
+            color: var(--text);
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 1rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
         }
 
         .rsvp-btn:hover {
             background: #c69b2e;
             transform: translateY(-2px);
-            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.4);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
         }
 
-        /* Audio player */
-        .audio-player {
+        .music-btn {
             position: fixed;
             bottom: 30px;
             right: 30px;
-            background: var(--color-accent);
-            width: 60px;
-            height: 60px;
+            width: 55px;
+            height: 55px;
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
-            z-index: 100;
-            transition: all 0.3s ease;
+            background: var(--accent);
             border: none;
-            color: var(--color-text);
-            font-size: 1.5rem;
+            color: var(--text);
+            font-size: 1.3rem;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+            transition: all 0.3s ease;
+            z-index: 1000;
         }
 
-        .audio-player:hover {
+        .music-btn:hover {
             transform: scale(1.1);
-            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.5);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
         }
 
-        .audio-player.playing::after {
+        .music-btn.playing::before {
             content: '';
             position: absolute;
             width: 100%;
             height: 100%;
+            border: 2px solid var(--accent);
             border-radius: 50%;
-            border: 2px solid var(--color-accent);
             animation: pulse 2s infinite;
         }
 
@@ -519,40 +429,15 @@
                 opacity: 1;
             }
             100% {
-                transform: scale(1.4);
+                transform: scale(1.3);
                 opacity: 0;
             }
-        }
-
-        audio {
-            display: none;
-        }
-
-        /* Footer */
-        .footer {
-            text-align: center;
-            padding: 3rem 0;
-            color: var(--color-light-text);
-            border-top: 1px solid rgba(212, 175, 55, 0.3);
-            font-size: 0.95rem;
-            opacity: 0;
-            animation: fadeIn 0.8s ease-out 3s forwards;
-        }
-
-        .footer p {
-            margin: 0.5rem 0;
-        }
-
-        /* Animaciones */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
         }
 
         @keyframes slideUp {
             from {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: translateY(20px);
             }
             to {
                 opacity: 1;
@@ -560,373 +445,231 @@
             }
         }
 
-        /* Scroll reveal */
-        .scroll-reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.6s ease-out;
-        }
-
-        .scroll-reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
+        /* Responsivo */
+        @media (max-width: 600px) {
+            .envelope {
+                max-width: 90vw;
+                height: 85vh;
             }
 
-            .event-details {
-                grid-template-columns: 1fr;
+            .envelope-content {
+                padding: 30px 20px;
             }
 
-            .couple-image {
-                max-width: 250px;
-                height: 250px;
+            .names {
+                font-size: 1.5rem;
             }
 
-            .audio-player {
+            .countdown-box {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .music-btn {
                 bottom: 20px;
                 right: 20px;
                 width: 50px;
                 height: 50px;
-                font-size: 1.2rem;
+                font-size: 1.1rem;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Pantalla del Sobre -->
-    <div class="envelope-screen" id="envelopeScreen">
-        <div class="envelope-wrapper">
-            <!-- Cinta decorativa -->
-            <div class="ribbon" id="ribbon"></div>
+    <!-- Música de fondo -->
+    <audio id="bgMusic" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg">
+    </audio>
 
-            <!-- Sobre principal -->
-            <div class="envelope" id="envelope">
-                <div class="envelope-decoration-top"></div>
+    <!-- Contenedor del sobre -->
+    <div class="envelope-wrapper">
+        <div class="envelope">
+            <!-- Moño -->
+            <div class="bow">
+                <div class="bow-left"></div>
+                <div class="bow-center"></div>
+                <div class="bow-right"></div>
+            </div>
 
-                <div class="envelope-content">
-                    <img src="images/couple.jpg" alt="Estefany & Ramón" class="couple-image">
+            <!-- Tapa del sobre -->
+            <div class="flap">✉️</div>
 
-                    <h1 class="envelope-title">Estefany <span>&</span> Ramón</h1>
-
-                    <p class="envelope-subtitle">"El amor es la poesía de los sentidos"</p>
-
-                    <div class="floral-divider">✦ ✦ ✦</div>
-
-                    <p class="touch-instruction" id="touchInstruction">↑ TOQUE PARA ABRIR ↑</p>
+            <!-- Contenido del sobre -->
+            <div class="envelope-content">
+                <!-- Encabezado -->
+                <div class="header">
+                    <h1 class="names">Estefany <span class="ampersand">&</span> Ramón</h1>
+                    <p class="tagline">"El amor es la poesía de los sentidos"</p>
                 </div>
+                <div class="divider"></div>
+
+                <!-- Sección 1: Fecha y Hora -->
+                <div class="section">
+                    <h2 class="section-title">📅 Evento</h2>
+                    <div class="section-content">
+                        <p><strong>Fecha:</strong> Viernes, 27 de Noviembre de 2026</p>
+                        <p><strong>Hora:</strong></p>
+                        <div class="time-display" id="timeDisplay">4:30 PM</div>
+                    </div>
+                </div>
+
+                <!-- Sección 2: Conteo Regresivo -->
+                <div class="section">
+                    <h2 class="section-title">⏱️ Conteo Regresivo</h2>
+                    <div class="countdown-box">
+                        <div class="countdown-item">
+                            <div class="countdown-number" id="days">0</div>
+                            <div class="countdown-label">Días</div>
+                        </div>
+                        <div class="countdown-item">
+                            <div class="countdown-number" id="hours">0</div>
+                            <div class="countdown-label">Horas</div>
+                        </div>
+                        <div class="countdown-item">
+                            <div class="countdown-number" id="minutes">0</div>
+                            <div class="countdown-label">Minutos</div>
+                        </div>
+                        <div class="countdown-item">
+                            <div class="countdown-number" id="seconds">0</div>
+                            <div class="countdown-label">Segundos</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sección 3: Ubicación -->
+                <div class="section">
+                    <h2 class="section-title">📍 Ubicación</h2>
+                    <div class="location">
+                        <div class="location-text">
+                            <p><strong>Lugar:</strong> Salón de Eventos Elegancia</p>
+                            <p>Calle Principal #123</p>
+                            <p>Santo Domingo, República Dominicana</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sección 4: Código de Vestimenta -->
+                <div class="section">
+                    <h2 class="section-title">👗 Código de Vestimenta</h2>
+                    <div class="section-content">
+                        <p>Formal / Elegante</p>
+                        <div class="dress-code-items">
+                            <div class="dress-item">
+                                <div class="dress-icon">👗</div>
+                                <div>Vestido Largo</div>
+                            </div>
+                            <div class="dress-item">
+                                <div class="dress-icon">🎩</div>
+                                <div>Traje Formal</div>
+                            </div>
+                            <div class="dress-item">
+                                <div class="dress-icon">💄</div>
+                                <div>Accesorios</div>
+                            </div>
+                            <div class="dress-item">
+                                <div class="dress-icon">👠</div>
+                                <div>Zapatos Formales</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sección 5: Paleta de Colores -->
+                <div class="section">
+                    <h2 class="section-title">🎨 Paleta Armónica</h2>
+                    <div style="display: flex; gap: 0.5rem; justify-content: center; margin-top: 1rem;">
+                        <div style="width: 40px; height: 40px; background: #f5f1ed; border: 2px solid #d4af37; border-radius: 6px;"></div>
+                        <div style="width: 40px; height: 40px; background: #d4af37; border: 2px solid #d4af37; border-radius: 6px;"></div>
+                        <div style="width: 40px; height: 40px; background: #2c2c2c; border: 2px solid #d4af37; border-radius: 6px;"></div>
+                        <div style="width: 40px; height: 40px; background: #8b7355; border: 2px solid #d4af37; border-radius: 6px;"></div>
+                        <div style="width: 40px; height: 40px; background: #e8dcc8; border: 2px solid #d4af37; border-radius: 6px;"></div>
+                    </div>
+                </div>
+
+                <!-- Sección 6: Versículo Bíblico -->
+                <div class="section">
+                    <h2 class="section-title">📖 Versículo Bíblico</h2>
+                    <div class="bible-verse">
+                        "El amor es paciente, es bondadoso. El amor no es envidioso ni jactancioso ni orgulloso. No se comporta con rudeza, no es egoísta, no se enoja fácilmente, no guarda rencor. El amor no se deleita en la maldad sino que se regocija con la verdad."
+                        <div class="bible-reference">— 1 Corintios 13:4-6</div>
+                    </div>
+                </div>
+
+                <!-- RSVP -->
+                <div class="rsvp-section">
+                    <h3 class="section-title">Confirmación de Asistencia</h3>
+                    <p class="section-content">Por favor, confirma tu asistencia</p>
+                    <a href="https://wa.me/?text=Hola%20Estefany%20y%20Ramón,%20confirmo%20mi%20asistencia%20a%20la%20boda.%20¡Gracias%20por%20la%20invitación!" class="rsvp-btn" target="_blank">
+                        Confirmar por WhatsApp
+                    </a>
+                </div>
+
+                <div style="height: 2rem;"></div>
             </div>
         </div>
     </div>
 
-    <!-- Contenido Principal -->
-    <div class="container" id="mainContent">
-        <!-- Portada -->
-        <section class="hero">
-            <h1>Estefany <span class="ampersand">&</span> Ramón</h1>
-            <p>"El amor es la poesía de los sentidos"</p>
-        </section>
-
-        <!-- Bienvenida Personalizada -->
-        <section class="welcome-section scroll-reveal">
-            <h2>Nos encantaría que nos acompañes, <span class="guest-name" id="guestName">Estimado Invitado</span></h2>
-            <div class="passes-info">
-                <p>Pases reservados para ti:</p>
-                <div class="passes-number" id="passesNumber">1</div>
-            </div>
-        </section>
-
-        <!-- Detalles del Evento -->
-        <section class="event-details scroll-reveal">
-            <div class="detail-card">
-                <div class="detail-icon">📅</div>
-                <h3>Fecha</h3>
-                <p>Viernes</p>
-                <p>27 de Noviembre</p>
-            </div>
-            <div class="detail-card">
-                <div class="detail-icon">🕐</div>
-                <h3>Hora</h3>
-                <p>4:30 PM</p>
-                <div class="countdown" id="countdown">Cargando...</div>
-            </div>
-        </section>
-
-        <!-- Código de Vestimenta -->
-        <section class="dress-code scroll-reveal">
-            <h3>Código de Vestimenta</h3>
-            <p style="text-align: center; margin-bottom: 2rem; color: var(--color-light-text);">Formal / Elegante</p>
-
-            <div class="dress-examples">
-                <div class="dress-item">
-                    <div class="dress-item-icon">👗</div>
-                    <div class="dress-item-text">Vestidos Largos</div>
-                </div>
-                <div class="dress-item">
-                    <div class="dress-item-icon">🎩</div>
-                    <div class="dress-item-text">Trajes Formales</div>
-                </div>
-                <div class="dress-item">
-                    <div class="dress-item-icon">💄</div>
-                    <div class="dress-item-text">Accesorios Elegantes</div>
-                </div>
-                <div class="dress-item">
-                    <div class="dress-item-icon">👠</div>
-                    <div class="dress-item-text">Zapatos Formales</div>
-                </div>
-            </div>
-
-            <div class="color-palette">
-                <p><strong>Paleta Armónica Sugerida:</strong></p>
-                <div class="colors">
-                    <div class="color-swatch" style="background: #f5f1ed;" title="Marfil Suave"></div>
-                    <div class="color-swatch" style="background: #d4af37;" title="Dorado Elegante"></div>
-                    <div class="color-swatch" style="background: #2c2c2c;" title="Negro Sofisticado"></div>
-                    <div class="color-swatch" style="background: #8b7355;" title="Marrón Cálido"></div>
-                    <div class="color-swatch" style="background: #e8dcc8;" title="Crema Refinada"></div>
-                </div>
-            </div>
-        </section>
-
-        <!-- RSVP -->
-        <section class="rsvp-section scroll-reveal">
-            <h3>Confirmación de Asistencia</h3>
-            <p>Por favor, confirma tu asistencia a través de WhatsApp</p>
-            <a href="#" class="rsvp-btn" id="rsvpBtn">Confirmar Asistencia</a>
-        </section>
-
-        <!-- Footer -->
-        <section class="footer">
-            <p>Viernes, 27 de Noviembre de 2026</p>
-            <p>Estefany & Ramón</p>
-            <p style="margin-top: 1rem; font-size: 0.9rem;">Gracias por ser parte de nuestro grande día ✨</p>
-        </section>
-    </div>
-
-    <!-- Audio -->
-    <audio id="backgroundMusic" loop>
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-    </audio>
-
-    <!-- Audio Player -->
-    <button class="audio-player" id="audioPlayer" title="Reproducir/Pausar Música">🎵</button>
+    <!-- Botón de música -->
+    <button class="music-btn" id="musicBtn" title="Reproducir/Pausar Música">🎵</button>
 
     <script>
-        // Base de datos de invitados
-        const guestsData = {
-            'carolin-familia': {
-                names: ['Carolin Rodríguez', 'Adriana Rodríguez', 'Génesis de Jesús'],
-                passes: 3
-            },
-            'rosa': {
-                names: ['Rosa Corona'],
-                passes: 1
-            },
-            'marcia-familia': {
-                names: ['Marcia A. Castillo', 'Day Nova Castillo', 'Jenifer Alexandra', 'Javier Nova Castillo', 'Sebastián Michel Castillo'],
-                passes: 5
-            },
-            'carmen-daiana': {
-                names: ['Carmen Castillo', 'Daiana Franco'],
-                passes: 2
-            },
-            'ana': {
-                names: ['Ana Corona'],
-                passes: 1
-            },
-            'anairis-cristal': {
-                names: ['Anairis Corona', 'Cristal'],
-                passes: 2
-            },
-            'engel-maria': {
-                names: ['Engel David Rodríguez', 'María Fernanda'],
-                passes: 2
-            },
-            'richeimily-samuel': {
-                names: ['Richeimily Rodríguez', 'Samuel Frica'],
-                passes: 2
-            },
-            'martires-teresa': {
-                names: ['Mártires Rodríguez', 'Teresa'],
-                passes: 2
-            },
-            'jenifer-jonathan': {
-                names: ['Jenifer Melo', 'Jonathan Soliman'],
-                passes: 2
-            },
-            'pastores-tita-valentin': {
-                names: ['Pastores Tita Calderón', 'Valentín Santana'],
-                passes: 2
-            },
-            'familia-santana': {
-                names: ['Dorian Santana', 'Solibel Jiménez', 'Tael Santana'],
-                passes: 3
-            },
-            'elizabeth-ezequiel': {
-                names: ['Elizabeth Marte', 'Ezequiel Álvarez'],
-                passes: 2
-            },
-            'ivania-emilio': {
-                names: ['Ivania Germán', 'Emilio Ramos'],
-                passes: 2
-            },
-            'darlin-laudina': {
-                names: ['Darlin Rodríguez', 'Laudina Guerrero'],
-                passes: 2
-            },
-            'reina': {
-                names: ['Reina Flores'],
-                passes: 1
-            },
-            'arianna-ruth': {
-                names: ['Arianna Hernández', 'Ruth Hernández'],
-                passes: 2
-            },
-            'emely': {
-                names: ['Emely de Pablos'],
-                passes: 1
-            },
-            'daniel-olga': {
-                names: ['Daniel Ramos', 'Olga Lidia'],
-                passes: 2
-            },
-            'santa-jessy': {
-                names: ['Santa Castillo', 'Jessy Pérez'],
-                passes: 2
+        // Contador regresivo
+        function updateCountdown() {
+            const eventDate = new Date('2026-11-27T16:30:00').getTime();
+            const now = new Date().getTime();
+            const timeLeft = eventDate - now;
+
+            if (timeLeft > 0) {
+                const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+                document.getElementById('days').textContent = days;
+                document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+                document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+                document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
             }
-        };
+        }
 
-        let currentGuestId = null;
-        let currentGuestData = null;
+        // Reloj digital
+        function updateClock() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            document.getElementById('timeDisplay').textContent = `${hours}:${minutes}:${seconds}`;
+        }
 
-        document.addEventListener('DOMContentLoaded', function() {
-            initializeInvitation();
-            setupScrollReveal();
-            setupAudioPlayer();
-            setupCountdown();
-            setupEnvelopeAnimation();
+        // Control de música
+        const bgMusic = document.getElementById('bgMusic');
+        const musicBtn = document.getElementById('musicBtn');
+
+        musicBtn.addEventListener('click', () => {
+            if (bgMusic.paused) {
+                bgMusic.play().catch(() => console.log('Autoplay bloqueado'));
+                musicBtn.classList.add('playing');
+            } else {
+                bgMusic.pause();
+                musicBtn.classList.remove('playing');
+            }
         });
 
-        function initializeInvitation() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const guestId = urlParams.get('guest');
-
-            if (guestId && guestsData[guestId]) {
-                currentGuestId = guestId;
-                currentGuestData = guestsData[guestId];
-                personalizeInvitation();
-            } else {
-                displayDefaultWelcome();
-            }
-
-            document.getElementById('audioPlayer').addEventListener('click', toggleAudio);
-        }
-
-        function personalizeInvitation() {
-            const guestNames = currentGuestData.names.join(' y ');
-            const passes = currentGuestData.passes;
-
-            document.getElementById('guestName').textContent = guestNames;
-            document.getElementById('passesNumber').textContent = passes;
-            setupRSVPButton(guestNames);
-        }
-
-        function displayDefaultWelcome() {
-            document.getElementById('guestName').textContent = 'Estimado Invitado';
-            document.getElementById('passesNumber').textContent = '1';
-            document.getElementById('rsvpBtn').href = `https://wa.me/?text=Hola%20Estefany%20y%20Ramón,%20confirmo%20mi%20asistencia%20a%20la%20boda.%20¡Gracias%20por%20la%20invitación!`;
-        }
-
-        function setupRSVPButton(guestName) {
-            const message = `Hola Estefany y Ramón, confirmo mi asistencia a la boda. Asistiré con los pases asignados a mi nombre: ${guestName}. ¡Gracias por la invitación!`;
-            const encodedMessage = encodeURIComponent(message);
-            document.getElementById('rsvpBtn').href = `https://wa.me/?text=${encodedMessage}`;
-        }
-
-        function setupEnvelopeAnimation() {
-            const envelope = document.getElementById('envelope');
-            const envelopeScreen = document.getElementById('envelopeScreen');
-            const ribbon = document.getElementById('ribbon');
-            const touchInstruction = document.getElementById('touchInstruction');
-
-            envelope.addEventListener('click', openEnvelope);
-            touchInstruction.addEventListener('click', openEnvelope);
-
-            function openEnvelope() {
-                // Animar cierre del sobre
-                setTimeout(() => {
-                    envelopeScreen.classList.add('hidden');
-                    ribbon.classList.add('hidden');
-
-                    // Reproducir música
-                    const audio = document.getElementById('backgroundMusic');
-                    audio.play().catch(() => {
-                        console.log('Autoplay bloqueado');
-                    });
-                    document.getElementById('audioPlayer').classList.add('playing');
-                }, 100);
-            }
-
-            envelope.style.cursor = 'pointer';
-        }
-
-        function toggleAudio() {
-            const audio = document.getElementById('backgroundMusic');
-            const player = document.getElementById('audioPlayer');
-
-            if (audio.paused) {
-                audio.play();
-                player.classList.add('playing');
-            } else {
-                audio.pause();
-                player.classList.remove('playing');
-            }
-        }
-
-        function setupAudioPlayer() {
-            const audio = document.getElementById('backgroundMusic');
-            audio.volume = 0.3;
-        }
-
-        function setupCountdown() {
-            const eventDate = new Date('2026-11-27T16:30:00').getTime();
-
-            function updateCountdown() {
-                const now = new Date().getTime();
-                const timeRemaining = eventDate - now;
-
-                if (timeRemaining > 0) {
-                    const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
-                    const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                    const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
-
-                    document.getElementById('countdown').textContent =
-                        `Faltan ${days}d ${hours}h ${minutes}m`;
-                } else {
-                    document.getElementById('countdown').textContent = '¡El día ha llegado!';
-                }
-            }
-
-            updateCountdown();
-            setInterval(updateCountdown, 60000);
-        }
-
-        function setupScrollReveal() {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('active');
-                    }
-                });
-            }, { threshold: 0.1 });
-
-            document.querySelectorAll('.scroll-reveal').forEach(element => {
-                observer.observe(element);
+        // Intentar reproducir música automáticamente
+        window.addEventListener('load', () => {
+            bgMusic.volume = 0.3;
+            // Intentar autoplay (algunos navegadores lo bloquean)
+            bgMusic.play().then(() => {
+                musicBtn.classList.add('playing');
+            }).catch(() => {
+                console.log('Autoplay bloqueado - usuario debe hacer clic');
             });
-        }
+        });
+
+        // Inicializar
+        updateCountdown();
+        updateClock();
+        setInterval(updateCountdown, 1000);
+        setInterval(updateClock, 1000);
     </script>
 </body>
 </html>
